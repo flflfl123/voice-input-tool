@@ -6,6 +6,36 @@
 
 这是一款 Windows 平台的语音输入法，接入第三方 ASR（语音识别）API，按下热键开始录音，再次按下热键即停止录音并将识别出的文字自动输入到当前光标位置。
 
+## 界面预览
+
+**主页** — 录音状态与最近一次识别结果
+
+![主页](screenshots/main.png)
+
+**日志** — 实时程序运行日志（录音、识别、后处理各阶段）
+
+![日志](screenshots/log.png)
+
+**历史记录** — 浏览历次识别记录
+
+![历史记录](screenshots/history.png)
+
+**AI 配置** — ASR 服务商、API 密钥、模型名称
+
+![AI配置](screenshots/ai-config.png)
+
+**工具箱** — 文本后处理开关集中页
+
+![工具箱](screenshots/toolbox.png)
+
+**设置（上半）** — 热键、主题、字号、界面语言
+
+![设置上半](screenshots/settings-1.png)
+
+**设置（下半）** — 开机自启、悬浮窗等
+
+![设置下半](screenshots/settings-2.png)
+
 ## 二、核心功能
 
 - 语音转文字：通过全局热键触发录音，识别结果自动粘贴到光标位置

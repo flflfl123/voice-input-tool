@@ -6,6 +6,36 @@
 
 This is a Windows voice input method that connects to a third-party ASR (speech recognition) API. Press the hotkey to start recording, press it again to stop recording, and the recognized text is automatically typed at the current cursor position.
 
+## Interface Preview
+
+**Home page** — recording status and the most recent recognition result
+
+![主页](screenshots/main.png)
+
+**Log** — real-time program logs (recording, recognition, post-processing)
+
+![日志](screenshots/log.png)
+
+**History** — browse past recognition records
+
+![历史记录](screenshots/history.png)
+
+**AI Configuration** — ASR provider, API key, model name
+
+![AI配置](screenshots/ai-config.png)
+
+**Toolbox** — centralized switches for text post-processing
+
+![工具箱](screenshots/toolbox.png)
+
+**Settings (part 1)** — hotkey, theme, font size, interface language
+
+![设置上半](screenshots/settings-1.png)
+
+**Settings (part 2)** — auto-start on boot, floating window, etc.
+
+![设置下半](screenshots/settings-2.png)
+
 ## II. Core Features
 
 - Voice to text: trigger recording via a global hotkey; recognition result is automatically pasted at the cursor position
