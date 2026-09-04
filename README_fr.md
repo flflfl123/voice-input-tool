@@ -6,6 +6,36 @@
 
 Il s'agit d'une méthode de saisie vocale pour la plateforme Windows qui s'appuie sur une API ASR (reconnaissance vocale) tierce. Appuyez sur le raccourci clavier pour commencer l'enregistrement, appuyez à nouveau pour l'arrêter : le texte reconnu est automatiquement inséré à la position actuelle du curseur.
 
+## Aperçu de l'interface
+
+**Accueil** — statut d'enregistrement et dernier résultat de reconnaissance
+
+![Accueil](screenshots/main.png)
+
+**Journal** — journaux en temps réel (enregistrement, reconnaissance, post-traitement)
+
+![Journal](screenshots/log.png)
+
+**Historique** — parcourir les résultats de reconnaissance précédents
+
+![Historique](screenshots/history.png)
+
+**Configuration IA** — fournisseur ASR, clé API, nom du modèle
+
+![Configuration IA](screenshots/ai-config.png)
+
+**Boîte à outils** — interrupteurs centralisés de post-traitement du texte
+
+![Boîte à outils](screenshots/toolbox.png)
+
+**Paramètres (partie 1)** — raccourci, thème, taille de police, langue
+
+![Paramètres partie 1](screenshots/settings-1.png)
+
+**Paramètres (partie 2)** — démarrage auto, fenêtre flottante, etc.
+
+![Paramètres partie 2](screenshots/settings-2.png)
+
 ## II. Fonctionnalités principales
 
 - Reconnaissance vocale : déclenchez l'enregistrement via un raccourci clavier global, le résultat reconnu est automatiquement collé à l'emplacement du curseur

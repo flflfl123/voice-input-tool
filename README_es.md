@@ -6,6 +6,36 @@
 
 Este es un método de entrada por voz para la plataforma Windows que se conecta a una API ASR (reconocimiento de voz) de terceros. Pulse la tecla de acceso rápido para iniciar la grabación; al pulsarla de nuevo, se detiene la grabación y el texto reconocido se introduce automáticamente en la posición actual del cursor.
 
+## Vista previa de la interfaz
+
+**Inicio** — estado de grabación y último resultado de reconocimiento
+
+![Inicio](screenshots/main.png)
+
+**Registro** — registros del programa en tiempo real (grabación, reconocimiento, posprocesamiento)
+
+![Registro](screenshots/log.png)
+
+**Historial** — explorar resultados de reconocimiento anteriores
+
+![Historial](screenshots/history.png)
+
+**Configuración de IA** — proveedor ASR, clave API, nombre del modelo
+
+![Configuración de IA](screenshots/ai-config.png)
+
+**Caja de herramientas** — interruptores centralizados de posprocesamiento de texto
+
+![Caja de herramientas](screenshots/toolbox.png)
+
+**Configuración (parte 1)** — atajo, tema, tamaño de fuente, idioma
+
+![Configuración parte 1](screenshots/settings-1.png)
+
+**Configuración (parte 2)** — inicio automático, ventana flotante, etc.
+
+![Configuración parte 2](screenshots/settings-2.png)
+
 ## 2. Funciones principales
 
 - Voz a texto: la grabación se activa mediante una tecla de acceso rápido global y el resultado del reconocimiento se pega automáticamente en la posición del cursor

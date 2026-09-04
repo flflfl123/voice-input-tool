@@ -6,6 +6,36 @@
 
 Dies ist eine Spracheingabemethode für Windows, die eine Drittanbieter-ASR-API (Spracherkennung) anbindet. Durch Drücken der Tastenkombination wird die Aufnahme gestartet; durch erneutes Drücken wird die Aufnahme gestoppt und der erkannte Text automatisch an der aktuellen Cursorposition eingefügt.
 
+## Oberflächen-Vorschau
+
+**Startseite** — Aufnahmestatus und letztes Erkennungsergebnis
+
+![Startseite](screenshots/main.png)
+
+**Protokoll** — Echtzeit-Programmprotokolle (Aufnahme, Erkennung, Nachbearbeitung)
+
+![Protokoll](screenshots/log.png)
+
+**Verlauf** — Frühere Erkennungsergebnisse durchsuchen
+
+![Verlauf](screenshots/history.png)
+
+**KI-Konfiguration** — ASR-Anbieter, API-Schlüssel, Modellname
+
+![KI-Konfiguration](screenshots/ai-config.png)
+
+**Werkzeugkasten** — Zentrale Schalter für Textnachbearbeitung
+
+![Werkzeugkasten](screenshots/toolbox.png)
+
+**Einstellungen (Teil 1)** — Hotkey, Theme, Schriftgröße, Sprache
+
+![Einstellungen Teil 1](screenshots/settings-1.png)
+
+**Einstellungen (Teil 2)** — Autostart, schwebendes Fenster usw.
+
+![Einstellungen Teil 2](screenshots/settings-2.png)
+
 ## 2. Kernfunktionen
 
 - Sprach-zu-Text: Aufnahme wird durch eine globale Tastenkombination ausgelöst, das Erkennungsergebnis wird automatisch an der Cursorposition eingefügt
