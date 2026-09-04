@@ -94,28 +94,9 @@ class VoiceInputApp:
         # 初始化文本处理器为空（在run()中创建）
         # Initialize text processor to None (created in run())
         self.text_processor: "TextProcessor" = None
-
-    def _init_gui(self):
-        # 初始化GUI窗口
-        # 创建主窗口实例并设置配置
-
-        # 延迟导入 MainWindow（customtkinter 较重，减少启动时间）
-        # Deferred import of MainWindow (customtkinter is heavy, reduces startup time)
-        from .gui import MainWindow
-        # 创建主窗口实例，传入配置字典，确保在初始化UI前加载配置
-        self.main_window = MainWindow(self.config)
-        # 设置配置到主窗口（填充输入框内容）
-        self.main_window.set_config(self.config)
-        # 从配置文件加载主题设置（更新按钮状态等）
-        self.main_window.load_theme_from_config(self.config)
-        # 设置窗口关闭时的回调函数（关闭窗口但保留托盘）
-        self.main_window.set_on_close_callback(self._close_main_window)
-        # 把热键监听器的暂停/恢复方法传给主窗口
-        # 用于设置页捕获热键时暂停全局热键监听，避免冲突触发录音
-        # Pass hotkey listener pause/resume methods to main window
-        # Used to pause global hotkey when capturing in settings, avoid conflict triggering recording
-        if hasattr(self, 'hotkey') and self.hotkey:
-            self.main_window.set_hotkey_callbacks(self.hotkey.pause, self.hotkey.resume)
+        # ponytail: 托盘优先架构 - 启动只创建轻量tk.Tk()root，customtkinter延后到用户点显示才加载
+        # 轻量root引用，用于启动期mainloop和托盘点击调度
+        self._lightweight_root = None
 
     def _toggle_recording(self):
         # 切换录音状态
@@ -699,14 +680,32 @@ class VoiceInputApp:
             except Exception as e:
                 logger.debug("显示窗口: root检查异常: %s", e)
                 root = None
-        
+
         if root is not None:
-            # 有可用的 root，调度到主线程执行
+            # 主窗口存在，调度到主线程显示
             # 重置重试计数器（GUI 已准备好）
             self._show_window_retry_count = 0
             root.after(0, self._show_window_in_main_thread)
+        elif self._lightweight_root is not None:
+            # ponytail: 托盘优先架构 - 主窗口未创建，用轻量root调度_recreate创建主窗口
+            try:
+                if self._lightweight_root.winfo_exists():
+                    # 轻量root可用，调度到主线程创建主窗口
+                    self._show_window_retry_count = 0
+                    self._lightweight_root.after(0, self._show_window_in_main_thread)
+                else:
+                    raise Exception("lightweight root destroyed")
+            except Exception as e:
+                logger.debug("显示窗口: 轻量root异常: %s", e)
+                import threading
+                self._show_window_retry_count += 1
+                if self._show_window_retry_count >= self._show_window_max_retries:
+                    logger.error("托盘: GUI 初始化超时（%d 次重试），停止显示窗口", self._show_window_retry_count)
+                    self._show_window_retry_count = 0
+                    return
+                threading.Timer(0.5, self._show_window).start()
         else:
-            # 没有可用的 root，说明 GUI 尚未初始化
+            # 没有任何 root，说明 GUI 尚未初始化
             # 这种情况可能发生，因为托盘在后台线程启动，而 GUI 在主线程初始化
             # 检查是否超过最大重试次数
             self._show_window_retry_count += 1
@@ -715,9 +714,8 @@ class VoiceInputApp:
                 logger.error("托盘: GUI 初始化超时（%d 次重试），停止显示窗口", self._show_window_retry_count)
                 self._show_window_retry_count = 0
                 return
-            
             # 等待后重试
-            logger.warning("托盘: GUI 尚未初始化，等待后重试 (第 %d/%d 次)", 
+            logger.warning("托盘: GUI 尚未初始化，等待后重试 (第 %d/%d 次)",
                           self._show_window_retry_count, self._show_window_max_retries)
             import threading
             threading.Timer(0.5, self._show_window).start()
@@ -735,18 +733,30 @@ class VoiceInputApp:
 
     def _recreate_main_window(self):
         # 重新创建主窗口
+        # ponytail: 托盘优先架构 - 销毁轻量root，创建MainWindow(CTk)并启动新mainloop
+        # 此方法在轻量root的after回调中调用，新mainloop嵌套运行（仅首次显示发生一次）
         # 此方法必须在主线程中调用
         logger.info("托盘: 重新创建主窗口")
         try:
-            # 延迟导入 MainWindow（customtkinter 较重）
+            # 销毁轻量root（退出启动期mainloop，为创建CTk root让路，tkinter只能有一个主root）
+            if self._lightweight_root is not None:
+                self._lightweight_root.destroy()
+                self._lightweight_root = None
+            # 延迟导入 MainWindow（customtkinter 较重，首次加载~2秒）
             # Deferred import of MainWindow (customtkinter is heavy)
             from .gui import MainWindow
             self.main_window = MainWindow(self.config)
             self.main_window.set_config(self.config)
             self.main_window.load_theme_from_config(self.config)
             self.main_window.set_on_close_callback(self._close_main_window)
+            # 把热键监听器的暂停/恢复方法传给主窗口
+            # 用于设置页捕获热键时暂停全局热键监听，避免冲突触发录音
+            if hasattr(self, 'hotkey') and self.hotkey:
+                self.main_window.set_hotkey_callbacks(self.hotkey.pause, self.hotkey.resume)
             self.main_window.bring_to_front()
             logger.info("托盘: 主窗口重新创建成功")
+            # 启动主窗口mainloop（嵌套在轻量root的after回调里，主窗口一直活直到程序退出）
+            self.main_window.mainloop()
         except Exception as e:
             logger.error("托盘: 重新创建主窗口失败: %s", e)
 
@@ -773,19 +783,18 @@ class VoiceInputApp:
 
 def run_gui_app(app_instance):
     # 运行GUI应用程序
-    # 初始化GUI，隐藏窗口，启动主事件循环
+    # ponytail: 托盘优先架构 - 启动只创建轻量tk.Tk()root，customtkinter延后到用户点显示才加载
+    # 启动期只加载标准库tkinter（快），customtkinter（重~2秒）延后到_recreate_main_window首次调用
     # app_instance: VoiceInputApp实例
-    
-    # 初始化GUI窗口
-    app_instance._init_gui()
-    # 获取主窗口引用
-    window = app_instance.main_window
-    # 启动GUI（设置日志处理器等）
-    window.start()
-    # 隐藏主窗口（默认隐藏到托盘）
-    window.hide()
-    # 启动tkinter主事件循环
-    window.mainloop()
+
+    # 导入标准库tkinter（轻量，不触发customtkinter加载）
+    import tkinter as tk
+    # 创建轻量root作为启动期mainloop载体（用户不可见）
+    app_instance._lightweight_root = tk.Tk()
+    # 隐藏轻量root（用户不感知，仅作mainloop和托盘点击调度用）
+    app_instance._lightweight_root.withdraw()
+    # 启动轻量root的mainloop，等待托盘点击触发_recreate_main_window创建主窗口
+    app_instance._lightweight_root.mainloop()
 
 
 def check_dependencies():
