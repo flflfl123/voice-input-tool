@@ -1,0 +1,138 @@
+{
+  "# 说明": "这是语音输入工具的配置文件示例，请复制为 config.json 并填入你的API密钥",
+  "# Description": "This is an example configuration file for the Voice Input Tool. Please copy to config.json and fill in your API keys.",
+  
+  "# ASR提供商类型": "可选值: openai_compatible(OpenAI兼容格式) / doubao(豆包大模型) / volcengine(火山引擎)",
+  "# ASR Provider Type": "Options: openai_compatible / doubao / volcengine",
+  "asr_provider": "openai_compatible",
+  
+  "# 豆包应用密钥": "仅当 asr_provider 为 doubao 或 volcengine 时需要填写",
+  "# Doubao App Key": "Required only when asr_provider is doubao or volcengine",
+  "app_key": "",
+  
+  "# 火山引擎访问密钥": "仅当 asr_provider 为 doubao 或 volcengine 时需要填写",
+  "# Volcengine Access Key": "Required only when asr_provider is doubao or volcengine",
+  "access_key": "",
+  
+  "# 豆包资源ID": "仅当 asr_provider 为 doubao 时需要填写",
+  "# Doubao Resource ID": "Required only when asr_provider is doubao",
+  "resource_id": "volc.bigasr.sauc.duration",
+  
+  "# 火山引擎集群名称": "仅当 asr_provider 为 volcengine 时需要填写",
+  "# Volcengine Cluster Name": "Required only when asr_provider is volcengine",
+  "cluster": "volcengine_streaming_common",
+  
+  "# ASR识别模式": "仅当 asr_provider 为 doubao 时需要填写，可选值: bigmodel_async / bigmodel / bigmodel_nostream",
+  "# ASR Recognition Mode": "Required only when asr_provider is doubao. Options: bigmodel_async / bigmodel / bigmodel_nostream",
+  "asr_mode": "bigmodel_async",
+  
+  "# OpenAI兼容API基础地址": "仅当 asr_provider 为 openai_compatible 时需要填写",
+  "# OpenAI Compatible API Base URL": "Required only when asr_provider is openai_compatible",
+  "base_url": "https://api.openai.com/v1",
+  
+  "# OpenAI兼容API密钥": "仅当 asr_provider 为 openai_compatible 时需要填写",
+  "# OpenAI Compatible API Key": "Required only when asr_provider is openai_compatible",
+  "api_key": "YOUR_API_KEY",
+  
+  "# 模型名称": "仅当 asr_provider 为 openai_compatible 时需要填写",
+  "# Model Name": "Required only when asr_provider is openai_compatible",
+  "model": "whisper-1",
+  
+  "# 音频采样率（Hz）": "建议保持默认值 16000",
+  "# Audio Sample Rate (Hz)": "Recommended to keep default value 16000",
+  "sample_rate": 16000,
+  
+  "# 音频块大小（字节）": "建议保持默认值 3200",
+  "# Audio Chunk Size (bytes)": "Recommended to keep default value 3200",
+  "chunk_size": 3200,
+  
+  "# 开机自启动": "true=开启, false=关闭",
+  "# Auto-start on Boot": "true=enabled, false=disabled",
+  "autostart": false,
+  
+  "# 主题模式": "light=亮色主题, dark=暗色主题",
+  "# Theme Mode": "light=light theme, dark=dark theme",
+  "theme": "light",
+  
+  "# 悬浮窗功能": "true=开启, false=关闭",
+  "# Floating Window Feature": "true=enabled, false=disabled",
+  "floating_enabled": true,
+  
+  "# 界面语言": "可选值: zh_CN(简体中文) / zh_TW(繁体中文) / en(English) / fr(法语) / es(西班牙语) / ru(俄语) / ja(日语) / ko(韩语) / de(德语) / pt(葡萄牙语) / it(意大利语) / nl(荷兰语) / pl(波兰语) / tr(土耳其语) / vi(越南语)",
+  "# Interface Language": "Options: zh_CN / zh_TW / en / fr / es / ru / ja / ko / de / pt / it / nl / pl / tr / vi",
+  "language": "zh_CN",
+  
+  "# ========== 文本后处理配置": "",
+  "# ========== Text Post-processing Configuration": "",
+  
+  "# 去除末尾逗句号": "true=开启, false=关闭",
+  "# Remove Trailing Punctuation": "true=enabled, false=disabled",
+  "remove_trailing_punct": true,
+  
+  "# ITN数字转换": "true=开启（将「十五六个」转为「15~16个」）, false=关闭",
+  "# ITN Number Conversion": "true=enabled (convert '十五六个' to '15~16个'), false=disabled",
+  "itn_enabled": true,
+  
+  "# 热词替换": "true=开启, false=关闭",
+  "# Hotword Replacement": "true=enabled, false=disabled",
+  "hot_enabled": true,
+  
+  "# 热词精确匹配阈值": "0.0~1.0，默认0.85，越高越严格",
+  "# Hotword Exact Match Threshold": "0.0~1.0, default 0.85, higher is stricter",
+  "hot_threshold": 0.85,
+  
+  "# 正则规则替换": "true=开启, false=关闭",
+  "# Regex Rule Replacement": "true=enabled, false=disabled",
+  "hot_rule_enabled": true,
+  
+  "# LLM角色处理": "true=开启, false=关闭",
+  "# LLM Role Processing": "true=enabled, false=disabled",
+  "llm_enabled": false,
+  
+  "# LLM API基础地址": "为空时使用ASR的base_url",
+  "# LLM API Base URL": "Use ASR base_url if empty",
+  "llm_base_url": "",
+  
+  "# LLM API密钥": "为空时使用ASR的api_key",
+  "# LLM API Key": "Use ASR api_key if empty",
+  "llm_api_key": "",
+  
+  "# LLM模型名称": "默认gpt-3.5-turbo",
+  "# LLM Model Name": "Default gpt-3.5-turbo",
+  "llm_model": "gpt-3.5-turbo",
+  
+  "# 日记归档": "true=开启, false=关闭",
+  "# Diary Archive": "true=enabled, false=disabled",
+  "diary_enabled": true,
+  
+  "# 主题颜色配置": "一般无需修改，可自定义界面颜色",
+  "# Theme Color Configuration": "Generally no need to modify, can customize interface colors",
+  "theme_colors": {
+    "dark": {
+      "bg": "#1A1A1A",
+      "sidebar": "#252525",
+      "content": "#2D2D2D",
+      "card": "#353535",
+      "text": "#E0E0E0",
+      "text_secondary": "#A0A0A0",
+      "hover": "#3A3A3A",
+      "active": "#404040",
+      "accent": "#4A90D9",
+      "border": "#444444",
+      "logo_color": "#FFFFFF"
+    },
+    "light": {
+      "bg": "#F5F5F5",
+      "sidebar": "#FAFAFA",
+      "content": "#FFFFFF",
+      "card": "#F0F0F0",
+      "text": "#333333",
+      "text_secondary": "#666666",
+      "hover": "#E8E8E8",
+      "active": "#E0E0E0",
+      "accent": "#4A90D9",
+      "border": "#DDDDDD",
+      "logo_color": "#000000"
+    }
+  }
+}

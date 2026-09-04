@@ -1,0 +1,54 @@
+__pycache__/
+*.pyc
+*.pyo
+
+# 配置文件（包含API密钥，不要提交）
+config/config.json
+config/history.json
+
+# 日志文件
+*.log
+# TimedRotatingFileHandler 轮转文件格式为 app.log.YYYY-MM-DD，不以 .log 结尾
+# TimedRotatingFileHandler rotation files are app.log.YYYY-MM-DD, not ending with .log
+config/app.log*
+logs/
+
+# 虚拟环境
+venv/
+env/
+.venv/
+
+# IDE配置
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# 操作系统文件
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# 构建产物
+build/
+dist/
+*.spec
+*.egg-info/
+*.egg
+
+# PyInstaller
+*.manifest
+*.spec.backup
+
+# 临时文件
+*.tmp
+*.lock
+voice_input.lock
+
+# 日记归档目录（包含用户语音数据）
+diary/
+
+# 热词和规则文件（用户自定义，可能包含敏感信息）
+config/hot.txt
+config/hot-rule.txt
