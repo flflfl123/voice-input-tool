@@ -11,7 +11,7 @@ import logging
 
 # 定义版本号
 # Define version number
-__version__ = "1.0.0"
+__version__ = "0.0.1"
 
 # 配置日志记录器
 # Configure logger
